@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+	xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xsi:schemaLocation=" 
+  	http://www.springframework.org/schema/beans  
+  	http://www.springframework.org/schema/beans/spring-beans.xsd 
+  	http://www.springframework.org/schema/util  
+  	http://www.springframework.org/schema/util/spring-util.xsd 
+  	http://cxf.apache.org/jaxrs 
+  	http://cxf.apache.org/schemas/jaxrs.xsd 
+  	http://cxf.apache.org/jaxws 
+  	http://cxf.apache.org/schemas/jaxws.xsd 
+  	http://cxf.apache.org/core 
+  	http://cxf.apache.org/schemas/core.xsd"    
+>
+   <import resource="classpath:META-INF/cxf/cxf.xml" /> 
+   <import resource="classpath:META-INF/cxf/cxf-extension-soap.xml" />
+   <import resource="classpath:META-INF/cxf/cxf-servlet.xml" /> 
+   
+   <bean id="restFulUsr" class="com.xinyou.frame.service.Usr"></bean>
+ 
+ 	<bean id="jacksonJsonProvider" class="org.codehaus.jackson.jaxrs.JacksonJsonProvider">
+		<constructor-arg>
+			<bean id="jacksonObjectMapper" class="com.xinyou.util.CustomObjectMapper" >
+			</bean>
+		</constructor-arg>
+	</bean>
+	
+	<jaxrs:server id="restContainer" address="/">
+		<jaxrs:serviceBeans>
+			<ref bean="restFulUsr"/>		
+		</jaxrs:serviceBeans>
+		<jaxrs:providers>
+			<ref bean="jacksonJsonProvider"/>
+		</jaxrs:providers>
+	</jaxrs:server>
+	
+</beans>

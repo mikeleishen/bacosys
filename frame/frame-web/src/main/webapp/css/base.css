@@ -1,0 +1,905 @@
+ul,li,body{
+	margin:0;
+	padding:0;
+}
+
+.title {
+	border-bottom: 1px none;
+	border-right: 1px none;
+	font-size: 24px;
+	font-weight: bold;
+	height: 40px;
+	letter-spacing: 0.5em;
+	line-height: 40px;
+	padding: 8px 0;
+	text-align: center;
+}
+
+body {
+	background: none repeat scroll 0 0;
+	font-family: Verdana, Arial, Helvetica, AppleGothic, sans-serif;
+	font-size: 14px;
+	height: 100%;
+	width: 100%;
+}
+
+.input-max {
+	width: 100%;
+}
+
+.select-max {
+	width: 100%;
+}
+
+.line {
+	color: #EEF3F9;
+	margin-top: 10px;
+	margin-bottom: 5px;
+}
+
+.clear {
+	clear: both;
+}
+
+div.ui-datepicker {
+	font-size: 12px;
+}
+
+.td-right {
+	text-align: right;
+}
+
+.td-left {
+	text-align: left;
+}
+
+.td-center {
+	text-align: center;
+}
+
+.checkbox-span {
+	padding: 2px;
+}
+
+
+/*--------header--------*/
+#H {
+	border-bottom: 1px solid #EBEBEB;
+	font-size: 16px;
+	height: 45px;
+	line-height: 45px;
+	margin-bottom: 0;
+}
+
+.limg {
+	height: 41px;
+	margin-top: 2px;
+	margin-left: 10px;
+	width: 190px;
+	margin-bottom: 2px;
+}
+
+.upic {
+	height: 27px;
+	width: 27px;
+}
+
+.upic-div {
+	border: 1px solid;
+	height: 27px;
+	line-height: 27px;
+	margin-top: 9px;
+	width: 27px;
+}
+
+#H .U_nav {
+	float: right;
+	height: 45px;
+	line-height: 45px;
+	padding-right: 20px;
+}
+
+#H .U_nav ul {
+}
+
+#H .U_nav li {
+	padding:0px;
+	margin:0px;
+	display: block;
+	float: left;
+	height: 45px;
+	line-height: 45px;
+	margin-right: 10px;
+}
+
+#H a {
+	color: #FFFFFF;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+#H a:hover {
+	color: #000000;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+#H .curr {
+	color: #F37D01;
+}
+
+.L {
+	float: left;
+	height: 45px;
+	width: 200px;
+}
+
+.product {
+	float: left;
+	height: 45px;
+	line-height: 45px;
+	padding-left: 10px;
+	background-color: #3fa5cf;
+	background: linear-gradient(to bottom, #4db6e1, #2482aa);
+}
+
+.product ul {
+	list-style: none outside none;
+	margin: 0;
+	padding: 0;
+	color: #FFFFFF;
+}
+
+.product li {
+	display: block;
+	float: left;
+	padding-right: 10px;
+	color: #FFFFFF;
+}
+
+#M {
+	height: 100%;
+	width: auto;
+}
+/*--------footer--------*/
+#F {
+	border-top: 1px solid #EBEBEB;
+	height: 4%;
+	padding-top: 5px;
+	text-align: center;
+}
+
+/*--------left-nav--------*/
+#nav {
+	border-top: medium none;
+	border-right: 1px solid #EBEBEB;
+	bottom: 0;
+	left: 0;
+	position: absolute;
+	width: 200px;
+	top: 46px;
+}
+
+#nav-tree {
+	height: 99%
+}
+
+#nav-tree ul.dynatree-container {
+	border: medium none;
+	font-family: Verdana, Arial, Helvetica, AppleGothic, sans-serif;
+	font-size: 14px;
+	overflow-x: auto;
+	overflow-y: scroll;
+}
+
+/*--------content--------*/
+.content {
+	bottom: 0px;
+	left: 200px;
+	position: absolute;
+	right: 0;
+	top: 46px;
+}
+
+.content-title {
+	border-bottom: 1px solid #EBEBEB;
+	display: block;
+	height: 30px;
+	line-height: 30px;
+	padding-left: 10px;
+}
+
+#content-info {
+	display: block;
+	height: 90%;
+}
+
+#datafileUploader {
+	float: left;
+}
+
+.uploadifyQueueItem {
+	width: 280px;
+}
+
+.fun-sys-select {
+	font-size: 14px;
+	height: 26px;
+	line-height: 26px;
+	padding: 4px;
+	width: 100%;
+}
+
+.fun-co-select {
+	font-size: 14px;
+	height: 26px;
+	line-height: 26px;
+	padding: 4px;
+	width: 100%;
+}
+
+.role-sys-select {
+	font-size: 14px;
+	height: 26px;
+	line-height: 26px;
+	padding: 4px;
+	width: 100%;
+}
+
+ul.dynatree-container a:hover {
+	background: none repeat scroll 0 0 #F2F7FD;
+	border-color: #B8D6FB;
+	color: black;
+	text-decoration: none;
+}
+
+.addtable td {
+	padding-left: 10px;
+}
+
+.addtable .td-operation a {
+	display: block;
+	float: left;
+	padding: 5px;
+}
+
+.fun-container {
+	border: 1px solid #EBEBEB;
+	display: block;
+	width: 200px;
+	height: 450px;
+}
+
+#fun-tree {
+	display: block;
+	width: 200px;
+	height: 430px;
+}
+
+#fun-tree ul.dynatree-container {
+	border: medium none;
+	font-family: Verdana, Arial, Helvetica, AppleGothic, sans-serif;
+	font-size: 14px;
+}
+
+.fun-info {
+	border: 1px solid #EBEBEB;
+	display: block;
+	height: 450px;
+	margin-top: 26px;
+	width: 540px;
+}
+/*--------组织--------*/
+.org-table {
+	margin: 0 auto;
+}
+
+.org-container {
+	border: 1px solid #EBEBEB;
+	display: block;
+	width: 200px;
+	height: 450px;
+}
+
+#org-tree {
+	display: block;
+	width: 200px;
+	height: 430px;
+}
+
+#org-tree ul.dynatree-container {
+	border: medium none;
+	font-family: Verdana, Arial, Helvetica, AppleGothic, sans-serif;
+	font-size: 14px;
+}
+
+.org-info {
+	border: 1px solid #EBEBEB;
+	display: block;
+	height: 450px;
+	margin-top: 26px;
+	width: 540px;
+}
+
+.role-fun-table {
+	margin: 0 auto;
+}
+
+.role-fun-container {
+	border: 1px solid #EBEBEB;
+	display: block;
+	height: 440px;
+	width: 600px;
+}
+
+#role-fun-tree {
+	display: block;
+	height: 430px;
+	width: 600px;
+}
+
+#role-fun-tree ul.dynatree-container {
+	border: medium none;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+caption,th {
+	text-align: left;
+}
+
+
+
+.edittable .num-td {
+	width: 80px;
+}
+
+.edittable .num-input {
+	width: 80px;
+}
+
+.edittable .dt-td {
+	width: 135px;
+}
+
+.edittable .dt-input {
+	width: 135px;
+}
+
+.edittable .name-td {
+	width: 80px;
+}
+
+.edittable .name-select {
+	width: 80px;
+}
+
+.edittable .proc-name-td {
+	width: 100px;
+}
+
+
+
+.edittable .order-sn-td {
+	text-align: center;
+	width: 100px;
+}
+
+
+
+.edittable .op-2-td {
+	text-align: center;
+	width: 80px;
+}
+
+.edittable .op-3-td {
+	text-align: center;
+	width: 100px;
+}
+
+.edittable .op-4-td {
+	text-align: center;
+	width: 120px;
+}
+
+.edittable .op-5-td {
+	text-align: center;
+	width: 210px;
+}
+
+.datatable .pagenav {
+	float: right;
+	text-align: right;
+}
+
+.datatable .pagenav a,.datatable .pagenav span.ellipsis {
+	text-align: center;
+	color: #333;
+	font-size: 12px;
+	line-height: 12px;
+	height: 12px;
+	margin-right: 10px;
+}
+
+.datatable .pagenav a {
+	border: 1px solid #999;
+	padding: 2px 3px;
+	cursor: pointer;
+}
+
+.datatable .pagenav a.y {
+	
+}
+
+.datatable .pagenav a.n {
+	background-color: #CCC;
+}
+
+.datatable .pagenav .pagenavjump {
+	line-height: 12px;
+	width: 36px;
+}
+
+.datatable .pagenav .pagenavjumpbtn {
+	text-decoration: none;
+	background-color: #CCC;
+}
+
+.searchtable {
+	margin-bottom: 10px;
+	width: 100%;
+}
+
+.searchtable td {
+	padding: 3px;
+}
+
+.searchtable .name {
+	text-align: right;
+	width: 80px;
+	margin-bottom: 5px;
+}
+
+.searchtable .d-td {
+	text-align: center;
+	width: 30px;
+}
+
+.searchtable .name-mid {
+	text-align: right;
+	width: 100px;
+}
+
+.searchtable .name-large {
+	text-align: right;
+	width: 120px;
+}
+
+.searchtable .input {
+	width: 151px;
+}
+
+.searchtable .input select {
+	width: 151px;
+}
+
+.searchtable .search-btn {
+	text-align: right;
+}
+
+.gridtable {
+	width: 100%;
+}
+
+.gridtable td {
+	padding: 3px;
+}
+
+.gridtable .name {
+	text-align: right;
+	width: 80px;
+}
+
+.gridtable .name-mid {
+	text-align: right;
+	width: 100px;
+}
+.gridtable .name-large {
+	text-align: right;
+	width: 120px;
+}
+.gridtable .input {
+}
+
+.gridtable .input select {
+	width: 151px;
+}
+
+.gridtable-nolist {
+	margin: 0 auto;
+}
+
+.gridtable-nolist td {
+	padding: 3px;
+}
+
+.gridtable-nolist td select {
+	width: 151px;
+}
+
+.gridtable-nolist .name {
+	text-align: right;
+	width: 80px;
+}
+
+.gridtable-nolist .name-mid {
+	text-align: right;
+	width: 100px;
+}
+
+.gridtable-nolist .name-large {
+	text-align: right;
+	width: 120px;
+}
+
+.gridtable-nolist .name-big-large {
+	text-align: right;
+	width: 130px;
+}
+
+.gridtable-nolist .input {
+	width: 151px;
+}
+
+.grid-textbox-input {
+	background: url("../image/text-bg.gif") repeat-x scroll 0 top white;
+	border: 1px solid #B5B8C8;
+	cursor: text;
+	height: 15px;
+	line-height: 15px;
+}
+
+.edittable {
+	border: 1px solid #CCC;
+	margin: 0 auto;
+	padding: 5px;
+	width: 100%;
+}
+
+.edittable th,.edittable td {
+	padding: 2px;
+	font-size: 12px;
+}
+
+.edittable th {
+	text-align: center;
+	vertical-align: middle;
+	padding-top: 0;
+	padding-bottom: 0;
+	height: 30px;
+	line-height: 30px;
+	font: bold 12px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+	border-right: 1px solid #CCC;
+	border-bottom: 1px solid #CCC;
+	background-color: #DBF8F8; /* Old browsers */
+	background-image: -moz-linear-gradient(top, #F0FFFF, #C8F0F0);
+	/* FF3.6+ */
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#F0FFFF),
+		to(#C8F0F0) ); /* Chrome,Safari4+ */
+	background-image: -webkit-linear-gradient(top, #F0FFFF, #C8F0F0);
+	/* Chrome10+,Safari5.1+ */
+	background-image: -o-linear-gradient(top, #F0FFFF, #C8F0F0);
+	/* Opera 11.10+ */
+	background-image: -ms-linear-gradient(top, #F0FFFF, #C8F0F0);
+	/* IE10+ */
+	background-image: linear-gradient(top, #F0FFFF, #C8F0F0); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient(  startColorstr='#F0FFFF',
+		endColorstr='#C8F0F0', GradientType=0 ); /* IE6-9 */
+}
+
+.edittable td {
+	border-right: 1px solid #CCC;
+	border-bottom: 1px solid #CCC;
+}
+
+.edittable tr:nth-child(even) {
+	background-color: #F8F8F8;
+}
+
+.edittable .checkbox_td {
+	text-align: center;
+	width: 37px;
+}
+
+.edittable .select_td {
+	width: 80px;
+}
+
+.edittable .select_input {
+	width: 80px;
+}
+
+.edittable .dt_td {
+	width: 135px;
+}
+
+.edittable .dt_input {
+	width: 135px;
+}
+
+.edittable .num_td {
+	width: 60px;
+}
+
+.edittable .num_input {
+	width: 60px;
+	text-align: center;
+}
+
+.edittable .name_td {
+	width: 60px;
+}
+
+.edittable .name_input {
+	width: 70px;
+	text-align: center;
+}
+
+.div-dataview-area {
+	height: 520px;
+	width: 240px;
+}
+
+.div-datapick {
+	height: 50px;
+	width: 240px;
+}
+
+.div-dataview {
+	border: 1px solid #C1DAD7;
+	height: 470px;
+	overflow-x: scroll;
+	overflow-y: scroll;
+	width: 240px;
+}
+
+.div-operation {
+	border: 1px solid #EBEBEB;
+	display: block;
+	width: 620px;
+	height: 520px;
+}
+
+.td-break {
+	word-wrap: break-word;
+}
+
+.td-center {
+	text-align: center;
+}
+
+.table-operation {
+	display: block;
+	text-align: left;
+	width: 100%;
+}
+
+.table-operation label {
+	display: block;
+	float: left;
+	margin-right: 5px;
+}
+
+.datatable .check-column {
+	text-align: center;
+	width: 30px;
+}
+
+.column {
+	text-align: center;
+	width: 30px;
+	margin: 5px;
+}
+
+.datatable .id {
+	
+}
+
+.datatable .d-td {
+	text-align: right;
+	width: 60px;
+}
+
+.datatable .name {
+	
+}
+
+.datatable .operation {
+	text-align: center;
+}
+
+.addtable .a_unusable {
+	color: #999999;
+}
+
+.addtable .a_unusable:hover {
+	color: #999999;
+	text-decoration: none;
+}
+
+.addtable .name {
+	text-align: left;
+	width: 80px;
+}
+
+.addtable .name-mid {
+	text-align: left;
+	width: 100px;
+}
+
+.addtable .name-large {
+	text-align: left;
+	width: 120px;
+}
+
+.addtable .name-big-large {
+	text-align: left;
+	width: 130px;
+}
+
+.addtable td select {
+	width: 151px;
+}
+
+.addtable .input {
+	width: 151px;
+}
+
+.datatable .addwidth-table-operation {
+	width: 300px;
+}
+
+.addtable .addwidth-large-table-name {
+	width: 120px;
+}
+
+.addtable .addwidth-mid-table-name {
+	width: 100px;
+}
+
+.inner-table {
+	width: 80%;
+}
+
+.inner-div {
+	width: 80%;
+}
+
+.div-savebtn {
+	margin-top: 10px;
+	text-align: center;
+}
+
+.div-savebtn a {
+	margin-right: 20px;
+}
+
+.td-savebtn {
+	text-align: center;
+}
+
+.td-savebtn a {
+	margin-right: 20px;
+}
+
+.div-empnav {
+	display: block;
+}
+
+.ul-empnav {
+	border-bottom: 1px solid #BFBFBF;
+	height: 30px;
+}
+
+.ul-empnav li {
+	display: block;
+	float: left;
+	margin-right: 10px;
+}
+
+.ul-empnav .active {
+	background: none repeat scroll 0 0 #FFFFFF;
+	border-top-left-radius: 2px;
+	border-top-right-radius: 2px;
+	border-top: 1px solid #BFBFBF;
+	border-right: 1px solid #BFBFBF;
+	border-left: 1px solid #BFBFBF;
+}
+
+.ul-empnav .normal {
+	background: none repeat scroll 0 0 transparent;
+	border-left: medium none;
+	border-right: medium none;
+	border-top: medium none;
+}
+
+.ul-empnav a {
+	border-top-left-radius: 2px;
+	border-top-right-radius: 2px;
+	color: #225599;
+	display: block;
+	float: left;
+	height: 20px;
+	line-height: 20px;
+	position: relative;
+	padding: 5px 10px;
+	text-decoration: none;
+	top: 1px;
+}
+
+.ul-empnav .normal a:hover {
+	background: none repeat scroll 0 0 #E1F0F7;
+	text-decoration: none;
+}
+
+.ul-empnav .active a:hover {
+	text-decoration: none;
+}
+
+.div-emp-content {
+	display: block;
+}
+
+.div-emp-addr-content {
+	
+}
+
+.datatable .grid-tr-editor input {
+	border: none;
+	width: 50px;
+}
+
+.datatable .grid-tr-editor-even input {
+	background-color: #F8F8F8;
+	border: none;
+	width: 50px;
+}
+
+.p_title {
+	border-bottom: 1px none;
+	border-right: 1px none;
+	font-size: 45px;
+	font-weight: bold;
+	height: 60px;
+	letter-spacing: 0.5em;
+	line-height: 60px;
+	padding: 8px 0;
+	text-align: center;
+}
+
+.filtertable {
+	
+}
+
+.filtertable td {
+	padding: 3px;
+}
+
+.filtertable .input {
+	width: 151px;
+}
+
+.filtertable .input select {
+	width: 151px;
+}
+.more-than-color{
+	color:green;
+}
+.less-than-color{
+	color:black;
+}
+.equal-color{
+	color:red;
+}

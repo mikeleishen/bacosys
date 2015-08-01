@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.xinyou</groupId>
+    <artifactId>frame</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+   <artifactId>frame-web</artifactId>
+   
+   <packaging>war</packaging>
+  
+   <properties>
+       <frame.version>0.0.1-SNAPSHOT</frame.version>
+       <cxf.version>2.4.2</cxf.version>
+   </properties> 
+  
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+    	<groupId>com.xinyou</groupId>
+    	<artifactId>frame-domain</artifactId>
+    	<version>${frame.version}</version>
+    </dependency>
+    <dependency>
+    	<groupId>com.xinyou</groupId>
+    	<artifactId>frame-service</artifactId>
+    	<version>${frame.version}</version>
+    </dependency>
+        
+          <!-- cxf dependencies -->
+    	<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-frontend-jaxrs</artifactId>
+			<version>${cxf.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-frontend-jaxws</artifactId>
+			<version>${cxf.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-transports-http</artifactId>
+			<version>${cxf.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>javax.ws.rs</groupId>
+			<artifactId>jsr311-api</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+		
+		<dependency>
+		  <groupId>org.apache.cxf</groupId>
+		  <artifactId>cxf-rt-core</artifactId>
+		  <version>${cxf.version}</version>
+		</dependency>
+		
+  </dependencies>
+  <build>
+    <finalName>frame-web</finalName>
+  </build>
+</project>

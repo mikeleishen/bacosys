@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"  http-equiv="content-type">
+<title> 条码管理系统 - 登录</title>
+<link href="css/login.css" rel="stylesheet" type="text/css" />
+<link href="script/skin-vista/ui.dynatree.css" rel="stylesheet" type="text/css" />
+<script src="script/jquery.js" type="text/javascript" ></script>
+<script src="script/jquery.cookie.js" type="text/javascript" ></script>
+<script src="script/json2.js" type="text/javascript" ></script>
+<script src="script/common.js" type="text/javascript" ></script>
+<script src="controller/login-index.js" type="text/javascript"></script>
+</head>
+<body>
+  <div class="sign-in">
+     <div class="signin-box">
+       <h1 class="signin-box-title">条码管理系统</h1>
+        <div class="signin-box-content">
+           <table class="signin-table" border="0">
+           <tbody>
+              	<tr>
+								<th>
+								<label class="signin-field">用户名：</label>
+								</th>
+								<td>
+								<input id="userName" class="signin-input" type="text" value="" name="userName" maxlength="40" />
+								</td>
+							</tr>
+				<tr>
+								<th>
+								<label class="signin-field">密码：</label>
+								</th>
+								<td>
+								<input id="userPswd" class="signin-input" type="password" name="userPswd" />
+								<br>
+								</td>
+							</tr>
+           </tbody>
+           </table>
+      
+        </div>
+        
+        <div class="clear"></div>
+	  
+		<div class="signin-btn-div">
+			<input id="signIn" class="signin-btn" type="button" value="登录 »">
+	    </div>
+     </div>
+  </div>
+
+</body>
+</html>

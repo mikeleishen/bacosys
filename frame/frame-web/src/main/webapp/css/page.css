@@ -1,0 +1,73 @@
+.c-main .c-main-range {
+	margin: 0 auto;
+	display:block;
+	width:1200px;
+}
+
+.c-main .name {
+	width: 100px;
+	text-align:right;
+}
+
+a.gridbtn:hover{
+	color: #f37d01 !important;
+}
+
+.c-main .value {
+	width: 120px;
+	text-align:left;
+}
+
+.c-main .need {
+	color: #2482aa;
+	font-weight: bold;
+}
+
+.c-main input, .c-main textarea, .c-main select {
+	width: 100%;
+}
+
+.c-main input[type=checkbox], .c-main input[type=radio]{
+	width: auto;
+}
+
+.c-main .value {
+	width: 150px;
+	text-align:left;
+}
+
+.c-main .gridlayout{font-size:1em;}
+.c-main .gridlayout{
+	margin:0 auto;
+}
+
+.c-main .dialog-range {
+	width: 80%;
+}
+
+.c-main a {
+	text-decoration: none;
+}
+
+.c-main a:hover {
+	color: #000000;
+	text-decoration: underline;
+}
+
+.c-main .savebtn a{
+	margin : 0 20px;
+	background-color: #686868;
+	background: linear-gradient(to bottom, #757575, #535353);
+	color:white;
+	font-weight:bold;
+	line-height: 24px;
+	width: 75px;
+	display:inline-block;
+}
+
+.c-main .savebtn {
+	margin:0 auto;
+	padding : 20px 0px 0px 0px;	
+	text-align:center;
+	display: block;
+}

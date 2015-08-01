@@ -1,0 +1,112 @@
+.datagrid
+{
+	margin: 0 auto;
+	display:block;
+	border-width:1px;
+	border-style: solid;
+	border-color:grey;
+}
+
+.datagrid-wrap {
+	position: relative;
+}
+.datagrid-view {
+	position: relative;
+	overflow: hidden;
+}
+.datagrid-view1 {
+	position: absolute;
+	overflow: hidden;
+	left: 0px;
+	top: 0px;
+}
+.datagrid-view2 {
+	position: absolute;
+	overflow: hidden;
+	left: 0px;
+	top: 0px;
+}
+.datagrid-header {
+	cursor: default;
+	background-color: #DBF8F8; /* Old browsers */
+	background-image: -moz-linear-gradient(top, #F0FFFF, #C8F0F0);
+	/* FF3.6+ */
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#F0FFFF),
+		to(#C8F0F0) ); /* Chrome,Safari4+ */
+	background-image: -webkit-linear-gradient(top, #F0FFFF, #C8F0F0);
+	/* Chrome10+,Safari5.1+ */
+	background-image: -o-linear-gradient(top, #F0FFFF, #C8F0F0);
+	/* Opera 11.10+ */
+	background-image: -ms-linear-gradient(top, #F0FFFF, #C8F0F0);
+	/* IE10+ */
+	background-image: linear-gradient(top, #F0FFFF, #C8F0F0); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient(  startColorstr='#F0FFFF',
+		endColorstr='#C8F0F0', GradientType=0 ); /* IE6-9 */
+}
+.datagrid-header .datagrid-cell{
+	margin: 0;
+	white-space: nowrap;
+	word-wrap: normal;
+	overflow: hidden;
+	text-align: center;
+}
+
+.datagrid-cell{
+	height:24px;
+	line-height:24px;
+	border-right-width:1px;
+	border-bottom-width:1px;
+	border-right-style:dotted;
+	border-bottom-style:dotted;
+}
+
+.datagrid-header-inner {
+	position: relative;
+}
+.datagrid-header-inner2 {
+	position: relative;
+}
+
+.datagrid-body {
+	overflow: auto;
+}
+
+.datagrid-resize-proxy {
+	position: absolute;
+	width: 1px;
+	top: 0;
+	height: 10000px;
+	background: red;
+	cursor: e-resize;
+	display: none;
+}
+
+.datagrid-pager {
+	background: #EFEFEF;
+	border-top: 1px solid #ccc;
+	position: relative;
+}
+
+.datagrid-pager  .pagination-num {
+	width: 30px;
+}
+
+.pagination-info {
+	float: right;
+	padding-right: 6px;
+	padding-top: 8px;
+	font-size: 14px;
+}
+.datagrid-pager table {
+	float: left;
+	height: 30px;
+}
+.datagrid-row-selected {
+	background: #FBEC88;
+	color: #000000;
+}
+
+.datagrid-row-alt {
+  background: #F8F8F8;
+}
+
