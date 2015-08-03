@@ -12,6 +12,7 @@
     <module>frame-util</module>
     <module>frame-domain</module>
     <module>frame-service</module>
+    <module>data-sync</module>
   </modules>
   
   

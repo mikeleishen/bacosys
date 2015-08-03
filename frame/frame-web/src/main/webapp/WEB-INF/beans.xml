@@ -21,6 +21,7 @@
    <import resource="classpath:META-INF/cxf/cxf-servlet.xml" /> 
    
    <bean id="restFulUsr" class="com.xinyou.frame.service.Usr"></bean>
+   
  
  	<bean id="jacksonJsonProvider" class="org.codehaus.jackson.jaxrs.JacksonJsonProvider">
 		<constructor-arg>
