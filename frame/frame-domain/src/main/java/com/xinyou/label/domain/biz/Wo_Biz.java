@@ -35,6 +35,17 @@ import com.xinyou.label.domain.viewes.WO_DOC_VIEW;
 import com.mysql.jdbc.StringUtils;
 
 public class Wo_Biz {
+	
+	/**
+	 * 根据物料ID， 获取工单及相关产品的信息列表 
+	 * @param itmId  物料ID
+	 * @param page_no
+	 * @param page_size
+	 * @param conn
+	 * @param connErp
+	 * @return
+	 * @throws Exception
+	 */
 	public static EntityListDM<WO_DOC_VIEW,WO_DOC_VIEW> getWoList(String itmId, int page_no, int page_size,Connection conn,Connection connErp) throws Exception
 	{
 		if (page_no <= 0)page_no = 1;
@@ -141,6 +152,13 @@ public class Wo_Biz {
 		return returnDM;
 	}
 	
+	/**
+	 * 根据工单ID 获取工单工艺 
+	 * @param woId
+	 * @param conn
+	 * @return
+	 * @throws Exception
+	 */
 	public static List<RAC_VIEW> getRacListByWoId(String woId,Connection conn) throws Exception
 	{
 		ArrayList<RAC_VIEW> returnList = new ArrayList<RAC_VIEW>();
@@ -202,6 +220,15 @@ public class Wo_Biz {
 		return returnList;
 	}
 	
+	/**
+	 * 更新工单工艺的RAC_SPEC字段内容
+	 * @param racSeqno
+	 * @param racId
+	 * @param itmId
+	 * @param racNewSpec
+	 * @param conn
+	 * @throws Exception
+	 */
 	public static void updateRacSpec(String racSeqno, String racId, String itmId,String racNewSpec,Connection conn) throws Exception
 	{
 		PreparedStatement pstmt = conn.prepareStatement("UPDATE WO_RAC SET RAC_SPEC=? FROM WO_DOC T2 WHERE WO_RAC.WO_DOC_ID=T2.WO_DOC_ID AND T2.WO_ITM_ID=? AND WO_RAC.WO_RAC_ID=? AND WO_RAC.RAC_ID=? AND WO_RAC.RAC_SPEC IS NULL");
@@ -213,18 +240,27 @@ public class Wo_Biz {
 		pstmt.close();
 	}
 	
+	/**
+	 * TODO
+	 * 插入流程票
+	 * @param subWo
+	 * @param conn
+	 * @throws Exception
+	 */
 	public static void addSubWo(SUB_WO_MAIN subWo,Connection conn) throws Exception
 	{
 		PreparedStatement pstmt = null;
 		
 		try
 		{
+		    //更新 工单中的 WO_BIND_QTY 字段  ，数量累加 
 			pstmt = conn.prepareStatement("UPDATE  WO_DOC SET WO_BIND_QTY=ISNULL(WO_BIND_QTY,0)+? WHERE WO_DOC_ID=?");
 			pstmt.setBigDecimal(1, subWo.getSub_qty());
 			pstmt.setString(2, subWo.getWo_id());
 			pstmt.execute();
 			pstmt.close();
 			
+			//插入流程票信息 
 			String guid = UUID.randomUUID().toString();
 			pstmt = conn.prepareStatement("INSERT INTO SUB_WO_MAIN(SUB_WO_MAIN_GUID,SUB_WO_MAIN_ID,CREATED_DT,CREATED_BY,UPDATED_DT,UPDATED_BY,CLIENT_GUID,IS_DELETED,DATA_VER,SUB_QTY,WO_ID,LOT_ID,CUT_ID,CUT_NAME,M_MODEL,M_QUALITY,M_QC_DOC,CUT_SEQNO,ITM_ID,NEXT_TEXT,SWM_MEMO,STOCK_AREA,SWS_QTY,SPLIT_QTY,PTN_NAME,WORK_DEMAND,SWS_MEMO,SP_ID,PRE_SWS_ID) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 			pstmt.setString(1, guid);
@@ -253,8 +289,8 @@ public class Wo_Biz {
 			pstmt.setString(20, subWo.getNext_text());
 			pstmt.setString(21, subWo.getSwm_memo());
 			pstmt.setString(22, subWo.getStock_area());
-			pstmt.setBigDecimal(23, subWo.getCut_qty());
-			pstmt.setInt(24, subWo.getSws_qty());
+			pstmt.setBigDecimal(23, subWo.getCut_qty()); 
+		    pstmt.setInt(24, subWo.getSws_qty());   //SWS_QTY 作为SPLIT_QTY
 			pstmt.setString(25, subWo.getPtn_name());
 			pstmt.setString(26, subWo.getWork_demand());
 			pstmt.setString(27, subWo.getSws_memo());
@@ -272,10 +308,13 @@ public class Wo_Biz {
 			pstmt.close();
 			
 			//modify by jimmy 20140305
+			//这里 计算大流程票可以拆分小流程票的张数 
 			subWo.setSws_qty(subWo.getSub_qty().divide(subWo.getCut_qty(), 0, BigDecimal.ROUND_CEILING).intValue());
 			
 			for(int i=0;i<subWo.getSws_qty();i++)
 			{
+				//插入小流程票
+				
 				BigDecimal subQty = new BigDecimal(0);
 				if(i==subWo.getSws_qty()-1)
 				{
@@ -283,6 +322,7 @@ public class Wo_Biz {
 				}
 				else
 				{
+					
 					subQty = subWo.getCut_qty();
 					subWo.setSub_qty(subWo.getSub_qty().subtract(subWo.getCut_qty()));
 				}
@@ -309,7 +349,7 @@ public class Wo_Biz {
 				}
 				String swsId = date_str+doc_seqno;
 				
-				//add ctn
+				//add ctn 在表CTN_MAIN 中插入记录 
 				CTN_MAIN ctn = new CTN_MAIN();
 				ctn.setCtn_baco(swsId);
 				ctn.setCtn_main_id(swsId);
@@ -352,7 +392,7 @@ public class Wo_Biz {
 				
 				pstmt.execute();
 				pstmt.close();
-			}
+			} //end for loop
 		}
 		catch (Exception e) {
 			throw e;
@@ -361,6 +401,16 @@ public class Wo_Biz {
 		}
 	}
 	
+	/**
+	 * 获取小流程票的明细信息 
+	 * @param woId
+	 * @param itmId
+	 * @param page_no
+	 * @param page_size
+	 * @param conn
+	 * @return
+	 * @throws Exception
+	 */
 	public static EntityListDM<SUB_WO_SUB_VIEW,SUB_WO_SUB_VIEW> getSwsList(String woId, String itmId, int page_no, int page_size,Connection conn) throws Exception
 	{
 		if (page_no <= 0)page_no = 1;
@@ -459,6 +509,13 @@ public class Wo_Biz {
 		return returnDM;
 	}
 
+	/**
+	 * 获取工单打印信息 。和流程票打印的相关信息 
+	 * @param swsguids ，需要打印出来的流程票ID
+	 * @param conn
+	 * @return
+	 * @throws Exception
+	 */
 	public static List<WO_PRINT_DOC> getWoPrintList(List<String> swsguids,Connection conn) throws Exception
 	{
 		ArrayList<WO_PRINT_DOC> returnList = new ArrayList<WO_PRINT_DOC>();
@@ -622,7 +679,13 @@ public class Wo_Biz {
 		return returnList;
 	}
 	
-	//根据流程票号获取流程票信息
+	/**
+	 * 根据小流程票号获取流程票信息
+	 * @param swsId
+	 * @param conn
+	 * @return
+	 * @throws Exception
+	 */
 	public static SUB_WO_SUB_VIEW getSwsOnlyById(String swsId,Connection conn) throws Exception{
 		SUB_WO_SUB_VIEW result=new SUB_WO_SUB_VIEW();
 		PreparedStatement pstmt = null;
@@ -660,6 +723,14 @@ public class Wo_Biz {
 		}
 	}
 	
+	/**
+	 * 获取流程票信息
+	 * @param swsId 小流程票ID
+	 * @param conn
+	 * @param connErp
+	 * @return
+	 * @throws Exception
+	 */
 	public static SWS_DOC getSwsById(String swsId,Connection conn,Connection connErp) throws Exception
 	{
 		SWS_DOC result = new SWS_DOC();
@@ -824,9 +895,18 @@ public class Wo_Biz {
 		return result;
 	}
 	
+	/**
+	 * 判断报工单的状态，是否在报工中 
+	 * @param swsGuid 报工单guid
+	 * @param racId
+	 * @param conn
+	 * @return
+	 * @throws Exception
+	 */
 	public static boolean IsRacInWork(String swsGuid,String racId,Connection conn) throws Exception{
 		boolean result=false;
-		
+		//   1：报工中
+		//   2：已报工'
 		PreparedStatement psCheckRac=conn.prepareStatement("SELECT SWS_RP_GUID FROM SWS_RP WHERE SWS_GUID=? AND RP_RAC_ID=? AND RP_STATUS = 1");
 		psCheckRac.setString(1,swsGuid);
 		psCheckRac.setString(2, racId);
@@ -840,8 +920,15 @@ public class Wo_Biz {
 		return result;
 	}
 	
-	//工序已完工数量汇总
-	//Added by xiz on 2014/10/14 
+	/**
+	 * 工序已完工数量汇总
+	 * Added by xiz on 2014/10/14 
+	 * @param swsGuid
+	 * @param racId
+	 * @param conn
+	 * @return
+	 * @throws Exception
+	 */
 	public static BigDecimal GetRPTotalFinishedQty(String swsGuid,String racId,Connection conn) throws Exception{
 		try{
 			BigDecimal result=BigDecimal.ZERO;
@@ -862,8 +949,15 @@ public class Wo_Biz {
 		}
 	}
 	
-	//工序报废数量汇总
-	//Added by xiz on 2014/10/21
+	/**
+	 * 工序报废数量汇总
+	 * Added by xiz on 2014/10/21
+	 * @param swsGuid
+	 * @param racId
+	 * @param conn
+	 * @return
+	 * @throws Exception
+	 */
 	public static BigDecimal GetRPTotalScrapedQty(String swsGuid,String racId,Connection conn) throws Exception{
 		try{
 			BigDecimal result=BigDecimal.ZERO;
@@ -884,8 +978,15 @@ public class Wo_Biz {
 		}
 	}
 	
-	//工序已完工数量汇总+报废数量汇总
-	//Added by xiz on 2014/10/14 
+	/**
+	 * 工序已完工数量汇总+报废数量汇总
+	 * Added by xiz on 2014/10/14 
+	 * @param swsGuid
+	 * @param racId
+	 * @param conn
+	 * @return
+	 * @throws Exception
+	 */
 	public static BigDecimal GetRPTotalFinishedAndScrapQty(String swsGuid,String racId,Connection conn) throws Exception{
 		try{
 			BigDecimal result=BigDecimal.ZERO;
@@ -908,8 +1009,15 @@ public class Wo_Biz {
 		}
 	}
 	
-	//获取上道工序ID
-	//Added by xiz on 2014/10/16
+	/**
+	 * 获取上道工序ID
+	 * Added by xiz on 2014/10/16
+	 * @param swsGuid
+	 * @param racId
+	 * @param conn
+	 * @return
+	 * @throws Exception
+	 */
 	public static String GetLastRacId(String swsGuid,String racId,Connection conn) throws Exception{
 		
 		String lastRacId="";
@@ -1581,6 +1689,14 @@ public class Wo_Biz {
 		psGetLastRacId = null;
 	}
 	
+	/**
+	 * 报废功能
+	 * @param scrap
+	 * @param operator
+	 * @param conn
+	 * @return
+	 * @throws SQLException
+	 */
 	public static String addScrap(SWS_SCRAP_VIEW scrap,String operator, Connection conn) throws SQLException
 	{
 		String guid = UUID.randomUUID().toString();
@@ -2354,6 +2470,14 @@ public class Wo_Biz {
 		return resultDoc;
 	}
 	
+	/**
+	 * 
+	 * @param swsRpGuid  报工单的GUID
+	 * @param scrapType  报废类型 
+	 * @param conn
+	 * @return
+	 * @throws Exception
+	 */
 	public static SWS_SCRAP_DOC getSwsScrapDocBySwsRpGuid(String swsRpGuid,int scrapType,Connection conn) throws Exception{
 		SWS_SCRAP_DOC resultDoc =  new SWS_SCRAP_DOC();
 		

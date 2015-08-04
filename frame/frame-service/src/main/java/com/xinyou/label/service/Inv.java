@@ -778,16 +778,18 @@ public class Inv extends BaseService {
 				
 				return response;
 			}
+			//解析到的请求参数 
 			TRAN_DOC  doc= request.getData_entity();
 			
 			String operator = ui.getUsr_main_guid();
 			String data_ver="1.0.0.0";
 			
+			//doc.getHead() return a Tran_Main Object
 			doc.getHead().setCreated_by(operator);
 			doc.getHead().setUpdated_by(operator);
 			doc.getHead().setClient_guid("gl");
 			doc.getHead().setData_ver(data_ver);
-			doc.getHead().setBase_doc_type(140);
+			doc.getHead().setBase_doc_type(140);  // 移位 
 			doc.getHead().setIs_syned(0);
 			doc.getHead().setNeed_syn(0);
 			
@@ -797,6 +799,7 @@ public class Inv extends BaseService {
 				itm.setClient_guid("gl");
 				itm.setData_ver(data_ver);
 			}
+			
 			for (TRAN_BACO baco : doc.getBody_baco()) {
 				baco.setCreated_by(operator);
 				baco.setUpdated_by(operator);

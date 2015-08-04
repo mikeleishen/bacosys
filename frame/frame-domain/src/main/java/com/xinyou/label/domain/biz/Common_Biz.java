@@ -17,6 +17,17 @@ import com.xinyou.label.domain.viewes.CTN_MAIN_VIEW;
 import com.xinyou.label.domain.viewes.ITM_MAIN_VIEW;
 
 public class Common_Biz {
+	
+	/**
+	 *   在表CTN_MAIN 中插入一条记录 
+	 * @param ctn    需要插入的记录信息
+	 * @param operator
+	 * @param data_ver
+	 * @param client_guid
+	 * @param conn
+	 * @return
+	 * @throws Exception
+	 */
 	public static String addBaco(CTN_MAIN ctn, String operator, String data_ver, String client_guid, Connection conn) throws Exception
 	{
 		PreparedStatement ps = null;
@@ -31,7 +42,7 @@ public class Common_Biz {
 				throw new Exception("代码为空！");
 			}
 			
-			//判断重复
+			//判断重复 ：同类型的容器  CTN_MAIN_ID 不允许重复 
 			ps = conn.prepareStatement("SELECT CTN_MAIN_ID FROM CTN_MAIN WHERE CTN_MAIN_ID=? AND CTN_TYPE=?");
 			ps.setString(1, ctn.getCtn_main_id());
 			ps.setInt(2, ctn.getCtn_type());
@@ -43,7 +54,7 @@ public class Common_Biz {
 			rs.close();
 			ps.close();
 			
-			//判断条码重复
+			//判断条码重复  ，在整个CTN_MAIN 表中，条码CTN_BACO 不允许重复     （  CTN_TYPE <>111 是什么意思？ mike） 
 			if(!StringUtils.isEmpty( ctn.getCtn_baco()))
 			{
 				ps = conn.prepareStatement("SELECT CTN_MAIN_ID FROM CTN_MAIN WHERE CTN_BACO=? AND CTN_TYPE<>111");
@@ -78,7 +89,7 @@ public class Common_Biz {
 			ps.setInt(16, 0);
 			ps.setString(17, ctn.getCtn_baco());
 			ps.setString(18, ctn.getCtn_name());
-			ps.setInt(19, 0);
+			ps.setInt(19, 0);   //CTN_STATUS  默认为0 
 			ps.setString(20, "");
 			ps.setString(21, ctn.getItm_id());
 			ps.setBigDecimal(22, ctn.getItm_qty());
@@ -95,8 +106,10 @@ public class Common_Biz {
 			
 			ps.execute();
 			
+			
 			if(!StringUtils.isEmpty(ctn.getParent_ctn_guid()))
 			{
+				//如果 插入的记录，它的parent_ctn_guid 不为空，那么需要更新这条记录 
 				updCtnStatus(ctn.getParent_ctn_guid(),conn);
 			}
 			return bacoGUID;
@@ -108,6 +121,14 @@ public class Common_Biz {
 		}
 	}
 	
+	
+
+	/**
+	 * 从表CTN_MAIN 中删除一条记录 
+	 * @param ctn_guid
+	 * @param conn
+	 * @throws Exception
+	 */
 	public static void delBaco(String ctn_guid, Connection conn) throws Exception
 	{
 		PreparedStatement pstmt = null;
@@ -117,6 +138,7 @@ public class Common_Biz {
 		String parentCtnGuid = "";
 		
 		try{
+			//step 1  判断是否存在这条记录
 			pstmt=conn.prepareStatement("SELECT T.CTN_TYPE,T1.CTN_TYPE,T1.CTN_MAIN_GUID FROM CTN_MAIN T LEFT JOIN CTN_MAIN T1 ON T1.CTN_MAIN_GUID=T.PARENT_CTN_GUID WHERE T.CTN_MAIN_GUID=?");
 			pstmt.setString(1, ctn_guid);
 			rs=pstmt.executeQuery();
@@ -135,6 +157,7 @@ public class Common_Biz {
 			rs.close();
 			pstmt.close();
 			
+			//step2  查找有多少记录关联到要删除的记录 ，如果被其他引用，那么不允许删除 
 			pstmt=conn.prepareStatement("SELECT COUNT(*) FROM CTN_MAIN WHERE PARENT_CTN_GUID=?");
 			pstmt.setString(1, ctn_guid);
 			rs=pstmt.executeQuery();
@@ -146,9 +169,10 @@ public class Common_Biz {
 			rs.close();
 			pstmt.close();
 			
-			
+			//step3 ： 10 实物周转箱  12：生产周转箱  13物流周转箱
 			if(ctnType==10||ctnType==12||ctnType==13)
 			{
+				//三种类型的箱子中有产品，那么不允许删除 
 				pstmt=conn.prepareStatement("SELECT ITM_QTY FROM CTN_MAIN WHERE CTN_MAIN_GUID=?");
 				pstmt.setString(1, ctn_guid);
 				rs=pstmt.executeQuery();
@@ -165,6 +189,7 @@ public class Common_Biz {
 			rs.close();
 			pstmt.close();
 			
+			//删除这条记录 
 			pstmt=conn.prepareStatement("DELETE FROM  CTN_MAIN WHERE CTN_MAIN_GUID=?");
 			pstmt.setString(1, ctn_guid);
 			pstmt.execute();
@@ -198,13 +223,13 @@ public class Common_Biz {
 	
 	
 	/**
-	 *   更新CTN_MAIN 表的 CTN_STATUS 状态
-	 *   如果 传进去的参数 guid 是 其他Container 的 Parent Container，
-	 *   那么 CTN_STATUS 设置为1 
+	 * 	  更新CTN_MAIN 表的 CTN_STATUS 状态 ，  如果 传进去的参数 guid 是 其他Container的 Parent Container，
+	 *   那么 CTN_STATUS 设置为1 ；
 	 *   如果不是，那么设置为 0 
-	 *   
-	 *   
-	 * */
+	 * @param guid     CTN_MAIN_GUID 
+	 * @param conn
+	 * @throws Exception
+	 */
 	public static void updCtnStatus( String guid, Connection conn ) throws Exception
 	{
 		PreparedStatement pstmt = null;
@@ -243,6 +268,14 @@ public class Common_Biz {
 		}
 	}
 	
+	
+	/**
+	 * 判断条码是否已经使用过  mike 这里存在疑问，
+	 * @param baco
+	 * @param conn
+	 * @return
+	 * @throws Exception
+	 */
 	public static boolean bacoIsUsed( String baco, Connection conn) throws Exception
 	{
 		PreparedStatement pstmt = null;
@@ -451,6 +484,13 @@ public class Common_Biz {
 		return result;
 	}
 
+	/**
+	 *  更新 CTN_MAIN 表中的记录信息 
+	 * @param ctn
+	 * @param operator
+	 * @param conn
+	 * @throws SQLException
+	 */
 	public static void updCtnPos(CTN_MAIN ctn,String operator,Connection conn) throws SQLException
 	{
 		PreparedStatement ps = null;
@@ -471,10 +511,14 @@ public class Common_Biz {
 		ps.close();
 		
 		//条码箱和无条码箱
+		// -- 10：实物周转箱     1 打头的都是周转箱
+		//  -- 11：虚拟周转箱 
+		//  -- 12：生产周转箱（流程票）
+		//  -- 13：物流周转箱（合格证）
 		if(ctn.getCtn_type()==13 || ctn.getCtn_type()==12||ctn.getCtn_type()==11||ctn.getCtn_type()==10)
 		{
-			ps = conn.prepareStatement("UPDATE CTN_MAIN SET UPDATED_DT=?,UPDATED_BY=?, WH_GUID=?,WH_AREA_GUID=?,WH_SHELF_GUID=?,WH_LOC_GUID=?,WH_PLT_GUID=? WHERE WH_PACKAGE_GUID=?");
 			
+			ps = conn.prepareStatement("UPDATE CTN_MAIN SET UPDATED_DT=?,UPDATED_BY=?, WH_GUID=?,WH_AREA_GUID=?,WH_SHELF_GUID=?,WH_LOC_GUID=?,WH_PLT_GUID=? WHERE WH_PACKAGE_GUID=?");			
 			ps.setLong(1, new Date().getTime());
 			ps.setString(2, operator);
 			ps.setString(3, ctn.getWh_guid());
@@ -498,7 +542,7 @@ public class Common_Biz {
 			ps.setString(6, ctn.getWh_shelf_guid());
 			ps.setString(7, ctn.getWh_loc_guid());
 			ps.setString(8, ctn.getWh_plt_guid());
-			ps.setString(9, ctn.getWh_package_guid());
+			ps.setString(9, ctn.getWh_package_guid());  
 			ps.setString(10, ctn.getCtn_main_guid());
 			ps.execute();
 			ps.close();
@@ -523,6 +567,13 @@ public class Common_Biz {
 		
 	}
 
+	/**
+	 * 
+	 * @param ctn
+	 * @param operator
+	 * @param conn
+	 * @throws SQLException
+	 */
 	public static void updPltPos(CTN_MAIN_VIEW ctn,String operator,Connection conn) throws SQLException
 	{
 		PreparedStatement ps = conn.prepareStatement("UPDATE CTN_MAIN SET UPDATED_DT=?,UPDATED_BY=?,PARENT_CTN_GUID=?, WH_GUID=?,WH_AREA_GUID=?,WH_SHELF_GUID=?,WH_LOC_GUID=? WHERE CTN_MAIN_GUID=?");
@@ -568,6 +619,13 @@ public class Common_Biz {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param ctn
+	 * @param operator
+	 * @param conn
+	 * @throws SQLException
+	 */
 	public static void updItmPos(CTN_MAIN_VIEW ctn,String operator,Connection conn) throws SQLException
 	{
 		PreparedStatement ps = conn.prepareStatement("UPDATE CTN_MAIN SET UPDATED_DT=?,UPDATED_BY=?,PARENT_CTN_GUID=?, WH_GUID=?,WH_AREA_GUID=?,WH_SHELF_GUID=?,WH_LOC_GUID=?,WH_PLT_GUID=?,WH_PACKAGE_GUID=? WHERE CTN_MAIN_GUID=?");
@@ -636,9 +694,15 @@ public class Common_Biz {
 		return result;
 	}
 	
-	/*获取该条码下所包含的所有条码
+	/**
+	 *  * 
+	 * 获取该条码下所包含的所有条码
 	 * 如果是无条码箱、物料、周转箱，则返回自身，（属于不正常操作）
 	 * 否则返回包含的条码，不包括自身
+	 * @param ctnBaco
+	 * @param conn
+	 * @return
+	 * @throws Exception
 	 */
 	public static List<CTN_MAIN_VIEW> getCtnBacoes(String ctnBaco,Connection conn) throws Exception
 	{
@@ -697,7 +761,14 @@ public class Common_Biz {
 		return result;
 	}
 	
-	//以汇总的方式，获取某个容器的所有包含物料的汇总信息
+	
+	/**
+	 * 以汇总的方式，获取某个容器的所有包含物料的汇总信息
+	 * @param ctnBaco
+	 * @param conn
+	 * @return
+	 * @throws Exception
+	 */
 	public static List<ITM_MAIN_VIEW> getCtnItems(String ctnBaco,Connection conn) throws Exception
 	{
 		List<ITM_MAIN_VIEW> result = new ArrayList<ITM_MAIN_VIEW>();

@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration> 
+  <appSettings>
+    <add key="ServiceAddress" value="http://192.168.1.101:8080/frame-web/rs/"/>
+    <add key="SysID" value="pda-frame"/>
+    <add key="BacoPre" value="http://192.168.1.101:8080/frame-web/gl/rs/"/>
+  </appSettings>
+</configuration>

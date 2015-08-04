@@ -1,0 +1,434 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{EDD0D224-398B-4B39-9024-99B142276EB9}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Inventory</RootNamespace>
+    <AssemblyName>Inventory</AssemblyName>
+    <ProjectTypeGuids>{4D628B5B-2FBC-4AA6-8C16-197242AEB884};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <PlatformFamilyName>PocketPC</PlatformFamilyName>
+    <PlatformID>b2c48bd2-963d-4549-9169-1fa021dce484</PlatformID>
+    <OSVersion>5.2</OSVersion>
+    <DeployDirSuffix>Inventory</DeployDirSuffix>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <NativePlatformName>Windows Mobile 6 Professional SDK</NativePlatformName>
+    <FormFactorID>
+    </FormFactorID>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;$(PlatformFamilyName)</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <FileAlignment>512</FileAlignment>
+    <WarningLevel>4</WarningLevel>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;$(PlatformFamilyName)</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <FileAlignment>512</FileAlignment>
+    <WarningLevel>4</WarningLevel>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.WindowsCE.Forms" />
+    <Reference Include="mscorlib" />
+    <Reference Include="Newtonsoft.Json.Compact, Version=3.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dlls\Newtonsoft.Json.Compact.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Frm\frmAllScrap.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm\frmAllScrap.Designer.cs">
+      <DependentUpon>frmAllScrap.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Frm\frmCombineBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm\frmCombineBox.Designer.cs">
+      <DependentUpon>frmCombineBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Frm\frmDoCert.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm\frmDoCert.Designer.cs">
+      <DependentUpon>frmDoCert.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Frm\frmFGoodsIn.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm\frmFGoodsIn.Designer.cs">
+      <DependentUpon>frmFGoodsIn.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Frm\frmMove.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm\frmMove.Designer.cs">
+      <DependentUpon>frmMove.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Frm\frmPartScrap.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm\frmPartScrap.Designer.cs">
+      <DependentUpon>frmPartScrap.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Frm\frmTakeStock.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm\frmTakeStock.Designer.cs">
+      <DependentUpon>frmTakeStock.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Frm\CommonFun.cs">
+    </Compile>
+    <Compile Include="Frm\frmBeginWork.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm\frmBeginWork.Designer.cs">
+      <DependentUpon>frmBeginWork.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Frm\frmBoxIn.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm\frmBoxIn.Designer.cs">
+      <DependentUpon>frmBoxIn.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Frm\frmConfirmSO.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm\frmConfirmSO.Designer.cs">
+      <DependentUpon>frmConfirmSO.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Frm\frmDoPlt.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm\frmDoPlt.Designer.cs">
+      <DependentUpon>frmDoPlt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Frm\frmEndWork.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm\frmEndWork.Designer.cs">
+      <DependentUpon>frmEndWork.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Frm\frmOtherIn.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm\frmOtherIn.Designer.cs">
+      <DependentUpon>frmOtherIn.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Frm\frmOtherOut.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm\frmOtherOut.Designer.cs">
+      <DependentUpon>frmOtherOut.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Frm\frmPurReceive.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm\frmPurReceive.Designer.cs">
+      <DependentUpon>frmPurReceive.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Frm\frmSearchItem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm\frmSearchItem.Designer.cs">
+      <DependentUpon>frmSearchItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Frm\frmUnBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm\frmUnBox.Designer.cs">
+      <DependentUpon>frmUnBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Frm\frmWork.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm\frmWork.Designer.cs">
+      <DependentUpon>frmWork.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Frm\frmSearchItem2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm\frmSearchItem2.Designer.cs">
+      <DependentUpon>frmSearchItem2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CTN_MAIN_VIEW.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\EMP_MAIN_VIEW.cs" />
+    <Compile Include="Model\EntityListDM.cs" />
+    <Compile Include="Model\ITM_MAIN_VIEW.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\PUR_ITM_VIEW.cs" />
+    <Compile Include="Model\RBA_ITM_VIEW.cs" />
+    <Compile Include="Model\SUB_WO_SUB_VIEW.cs" />
+    <Compile Include="Model\SWS_DOC.cs" />
+    <Compile Include="Model\SWS_RAC_VIEW.cs" />
+    <Compile Include="Model\SWS_RP.cs" />
+    <Compile Include="Model\SWS_RP_DOC.cs" />
+    <Compile Include="Model\SWS_STAFF.cs" />
+    <Compile Include="Model\TRAN_BACO.cs" />
+    <Compile Include="Model\TRAN_DOC.cs" />
+    <Compile Include="Model\TRAN_ITM.cs" />
+    <Compile Include="Model\TRAN_ITM_BASE.cs" />
+    <Compile Include="Model\TRAN_MAIN.cs" />
+    <Compile Include="Model\CTN_MOVE_VIEW.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Request\BasicRequest.cs" />
+    <Compile Include="Response\BasicResponse.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{CC6F5BEC-6BD6-43D7-A896-642833FD1445}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Entrance\Entrance.csproj">
+      <Project>{9C141ACE-8F11-413E-A7AF-B45F573E9002}</Project>
+      <Name>Entrance</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Frm\frmAllScrap.resx">
+      <DependentUpon>frmAllScrap.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm\frmCertSWSBind.resx">
+      <DependentUpon>frmCertSWSBind.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm\frmCodeBind.resx">
+      <DependentUpon>frmCodeBind.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm\frmCombineBox.resx">
+      <DependentUpon>frmCombineBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm\frmDoBox.resx">
+      <DependentUpon>frmDoBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm\frmDoCert.resx">
+      <DependentUpon>frmDoCert.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm\frmFGoodsIn.resx">
+      <DependentUpon>frmFGoodsIn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm\frmMove.resx">
+      <DependentUpon>frmMove.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm\frmPartScrap.resx">
+      <DependentUpon>frmPartScrap.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm\frmSemiBoxOtherIn.resx">
+      <DependentUpon>frmSemiBoxOtherIn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm\frmSemiCheck.resx">
+      <DependentUpon>frmSemiCheck.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm\frmSemiOtherOut.resx">
+      <DependentUpon>frmSemiOtherOut.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm\frmSemiPurRec.resx">
+      <DependentUpon>frmSemiPurRec.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm\frmSemiScatteredOtherIn.cs.resx">
+      <DependentUpon>frmSemiScatteredOtherIn.cs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm\frmSemiWork.resx">
+      <DependentUpon>frmSemiWork.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm\frmSWSMove.resx">
+      <DependentUpon>frmSWSMove.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm\frmTakeStock.resx">
+      <DependentUpon>frmTakeStock.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm\frmBeginWork.resx">
+      <DependentUpon>frmBeginWork.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm\frmBoxIn.resx">
+      <DependentUpon>frmBoxIn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm\frmConfirmSO.resx">
+      <DependentUpon>frmConfirmSO.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm\frmDoPlt.resx">
+      <DependentUpon>frmDoPlt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm\frmEndWork.resx">
+      <DependentUpon>frmEndWork.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm\frmOtherIn.resx">
+      <DependentUpon>frmOtherIn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm\frmOtherOut.resx">
+      <DependentUpon>frmOtherOut.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm\frmPurReceive.resx">
+      <DependentUpon>frmPurReceive.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm\frmSearchItem.resx">
+      <DependentUpon>frmSearchItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm\frmUnBox.resx">
+      <DependentUpon>frmUnBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm\frmUpdateWork.resx">
+      <DependentUpon>frmUpdateWork.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm\frmUpdateWorkDetail.resx">
+      <DependentUpon>frmUpdateWorkDetail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm\frmWork.resx">
+      <DependentUpon>frmWork.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm\frmSearchItem2.resx">
+      <DependentUpon>frmSearchItem2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm\frmWorkSiteCheck.resx">
+      <DependentUpon>frmWorkSiteCheck.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm\frmAllScrapList.resx">
+      <DependentUpon>frmAllScrapList.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Frm\frmCertSWSBind.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm\frmCertSWSBind.Designer.cs">
+      <DependentUpon>frmCertSWSBind.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Frm\frmCodeBind.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm\frmCodeBind.Designer.cs">
+      <DependentUpon>frmCodeBind.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Frm\frmDoBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm\frmDoBox.Designer.cs">
+      <DependentUpon>frmDoBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Frm\frmSemiBoxOtherIn.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm\frmSemiBoxOtherIn.Designer.cs">
+      <DependentUpon>frmSemiBoxOtherIn.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Frm\frmSemiCheck.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm\frmSemiCheck.Designer.cs">
+      <DependentUpon>frmSemiCheck.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Frm\frmSemiOtherOut.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm\frmSemiOtherOut.Designer.cs">
+      <DependentUpon>frmSemiOtherOut.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Frm\frmSemiPurRec.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm\frmSemiPurRec.Designer.cs">
+      <DependentUpon>frmSemiPurRec.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Frm\frmSemiScatteredOtherIn.cs.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm\frmSemiScatteredOtherIn.cs.Designer.cs">
+      <DependentUpon>frmSemiScatteredOtherIn.cs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Frm\frmSemiWork.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm\frmSemiWork.Designer.cs">
+      <DependentUpon>frmSemiWork.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Frm\frmSWSMove.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm\frmSWSMove.Designer.cs">
+      <DependentUpon>frmSWSMove.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Frm\frmUpdateWork.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm\frmUpdateWork.Designer.cs">
+      <DependentUpon>frmUpdateWork.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Frm\frmUpdateWorkDetail.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm\frmUpdateWorkDetail.Designer.cs">
+      <DependentUpon>frmUpdateWorkDetail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Frm\frmWorkSiteCheck.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm\frmWorkSiteCheck.Designer.cs">
+      <DependentUpon>frmWorkSiteCheck.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Frm\frmAllScrapList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm\frmAllScrapList.Designer.cs">
+      <DependentUpon>frmAllScrapList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CERT_DOC_VIEW.cs" />
+    <Compile Include="Model\CERT_SWS_DOC.cs" />
+    <Compile Include="Model\CERT_SWS_RE_VIEW.cs" />
+    <Compile Include="Model\CODE_MAIN.cs" />
+    <Compile Include="Model\PARA_MAIN.cs" />
+    <Compile Include="Model\PUR_BACO_VIEW.cs" />
+    <Compile Include="Model\RAC_SCRAP_VIEW.cs" />
+    <Compile Include="Model\RAC_VIEW.cs" />
+    <Compile Include="Model\RBA_CTN_RE.cs" />
+    <Compile Include="Model\STK_ITM_WKSITE.cs" />
+    <Compile Include="Model\STK_MAIN.cs" />
+    <Compile Include="Model\SWS_SCRAP_DOC.cs" />
+    <Compile Include="Model\SWS_SCRAP_VIEW.cs" />
+    <Compile Include="Model\ITM_MAIN.cs" />
+    <Compile Include="Model\TRAN_BASE_DOC.cs" />
+    <Compile Include="Model\RBA_CTN_RE_VIEW.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CompactFramework.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}">
+        <HostingProcess disable="1" />
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -707,7 +707,7 @@ ORDER BY T4.CTN_MAIN_ID,T3.CTN_MAIN_ID,T1.CTN_BACO
 	
 	/**
 	 *   添加盘点计划 
-	 *   
+	 *   TODO
 	 * */
 	public static String addTakeStockPlan(STK_MAIN stkData, Connection conn) throws Exception{
 		PreparedStatement pstmtGet = conn.prepareStatement("SELECT STK_MAIN_ID FROM STK_MAIN WHERE STK_MAIN_ID=?");
@@ -755,6 +755,7 @@ ORDER BY T4.CTN_MAIN_ID,T3.CTN_MAIN_ID,T1.CTN_BACO
 	
 	/**
 	 * 更新盘点状态 
+	 * TODO
 	 * */
 	public static void upTakeStockPlan(STK_MAIN stkData, Connection conn) throws Exception{
 		PreparedStatement pstmtUp = conn.prepareStatement("UPDATE STK_MAIN SET UPDATED_DT=?,UPDATED_BY=?,STK_STATUS=?,STK_MEMO=?,STK_P_BDT=?,STK_P_EDT=? WHERE STK_MAIN_ID=?");
@@ -913,6 +914,13 @@ ORDER BY T4.CTN_MAIN_ID,T3.CTN_MAIN_ID,T1.CTN_BACO
 		return returnList;
 	}
 	
+	/**
+	 * 
+	 * @param entityRequest
+	 * @param conn
+	 * @return
+	 * @throws Exception
+	 */
 	public static List<STK_MAIN> getStockPlanListByFields(STK_MAIN entityRequest, Connection conn) throws Exception{
 		List<STK_MAIN> returnList = new ArrayList<STK_MAIN>();
 		PreparedStatement pstmt = null;
@@ -961,9 +969,17 @@ ORDER BY T4.CTN_MAIN_ID,T3.CTN_MAIN_ID,T1.CTN_BACO
 		return returnList;
 	}
 	
-	/**
-	 *  TODO 
-	 * */
+    /**
+     * 
+     * @param pkgBaco 新的包装的条码 
+     * @param swsList
+     * @param operator
+     * @param dataVer
+     * @param clientId
+     * @param conn
+     * @return
+     * @throws Exception
+     */
 	public static String pkgSws(String pkgBaco, List<CTN_MAIN_VIEW> swsList,String operator, String dataVer, String clientId, Connection conn) throws Exception
 	{
 		PreparedStatement ps;
@@ -972,12 +988,13 @@ ORDER BY T4.CTN_MAIN_ID,T3.CTN_MAIN_ID,T1.CTN_BACO
 		String pkgGuid;
 		BigDecimal itmQty = BigDecimal.ZERO;
 
+		//根据swsList中的项，调整库存
 		for(CTN_MAIN_VIEW sws : swsList)
 		{
 			itmId = sws.getItm_id();
 			itmQty = itmQty.add(sws.getItm_qty());
 			lotId = sws.getLot_id();
-			
+		
 			ps = conn.prepareStatement("UPDATE CTN_MAIN SET UPDATED_BY=?,UPDATED_DT=?,ITM_QTY=ITM_QTY-? WHERE CTN_BACO=?");
 			ps.setString(1, operator);
 			ps.setLong(2, new Date().getTime());
@@ -1016,8 +1033,16 @@ ORDER BY T4.CTN_MAIN_ID,T3.CTN_MAIN_ID,T1.CTN_BACO
 	}
 	
 	/**
-	 *  TODO 
-	 * */
+	 * 
+	 * @param pkgBaco
+	 * @param swsList
+	 * @param operator
+	 * @param dataVer
+	 * @param clientId
+	 * @param conn
+	 * @return
+	 * @throws Exception
+	 */
 	public static String pkgCert(String pkgBaco, List<CTN_MAIN_VIEW> swsList,String operator, String dataVer, String clientId, Connection conn) throws Exception
 	{
 		PreparedStatement ps;
@@ -1057,9 +1082,13 @@ ORDER BY T4.CTN_MAIN_ID,T3.CTN_MAIN_ID,T1.CTN_BACO
 	}
 	
 	/**
-	 *    合格证被哪些包装箱使用到 （一个合格证，可以对应多个物流包装箱 
+	 * 	  合格证被哪些包装箱使用到 （一个合格证，可以对应多个物流包装箱 
 	 *     TYPE=13 物流周转箱 （合格证）
-	 * */
+	 * @param pkgBaco
+	 * @param conn
+	 * @return
+	 * @throws Exception
+	 */
 	public static PKG_DOC getCertPkg(String pkgBaco, Connection conn) throws Exception
 	{
 		PKG_DOC result = new PKG_DOC();
@@ -1084,9 +1113,14 @@ ORDER BY T4.CTN_MAIN_ID,T3.CTN_MAIN_ID,T1.CTN_BACO
 		
 		return result;
 	}
+	
 	/**
-	 * TODO 
-	 * */
+	 * 
+	 * @param ctn_baco
+	 * @param locBaco
+	 * @param conn
+	 * @throws Exception
+	 */
 	public static void getInProduct(String ctn_baco,String locBaco,Connection conn) throws Exception
 	{
 		CTN_MAIN_VIEW ctn = Common_Biz.getCtnByBaco(locBaco, conn);
@@ -1120,8 +1154,12 @@ ORDER BY T4.CTN_MAIN_ID,T3.CTN_MAIN_ID,T1.CTN_BACO
 	}
 	
 	/**
-	 *  TODO 
-	 * */
+	 *  根据物流周转箱条码，获取所有的记录
+	 * @param pkgBacoList
+	 * @param conn
+	 * @return
+	 * @throws Exception
+	 */
 	public static List<TRAN_BACO> getCertBacoListByPkgBacoList(List<TRAN_BACO> pkgBacoList,Connection conn) throws Exception
 	{
 		List<TRAN_BACO> certBacoList = new ArrayList<TRAN_BACO>();
@@ -1151,8 +1189,15 @@ ORDER BY T4.CTN_MAIN_ID,T3.CTN_MAIN_ID,T1.CTN_BACO
 	}
 	
 	/**
-	 * TODO
-	 * */
+	 *  上托盘
+	 * @param plt  
+	 * @param pkgList
+	 * @param operator
+	 * @param data_ver
+	 * @param client_guid
+	 * @param conn
+	 * @throws Exception
+	 */
 	public static void doPlt(CTN_MAIN_VIEW plt,List<CTN_MAIN_VIEW> pkgList, String operator,String data_ver,String client_guid,Connection conn) throws Exception
 	{
 		CTN_MAIN_VIEW loc = Common_Biz.getCtnByBaco(plt.getParent_ctn_baco(), conn);

@@ -1,0 +1,6 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <DeployDeviceID>7dafd6e0-7537-463d-8079-6bf4e5c95694</DeployDeviceID>
+    <NETCFDeploy>true</NETCFDeploy>
+  </PropertyGroup>
+</Project>

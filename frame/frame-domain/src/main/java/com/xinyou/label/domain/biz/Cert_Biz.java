@@ -75,8 +75,8 @@ public class Cert_Biz {
 	}
 	
 	/**
-	 * 生成合格证  以C打头
-	 * @param maxId
+	 * 生成合格证  以C打头 maxId 的基础上加1 
+	 * @param maxId 
 	 * @return
 	 * @throws Exception
 	 */
@@ -94,6 +94,17 @@ public class Cert_Biz {
 		return "C"+date_str+doc_seqno;		
 	}
 	
+	/**
+	 * 合格证 生成，根据产品总量，每个箱子装箱量 。来决定生成多少合格证 
+	 * 如果有100个产品 ，要装箱，每个箱子装30个，那么 100/30 = 3 个整箱，剩余10 个也要一个箱子 ，共4个箱子 。
+	 * 那么需要生成 4个合格证 ，CERT_DOC 中新增4比记录
+	 * @param doc    要绑定合格证的产品 
+	 * @param conn
+	 * @param operator
+	 * @param client
+	 * @param data_ver
+	 * @throws Exception
+	 */
 	public static void addCerts(CERT_DOC_VIEW doc, Connection conn,String operator, String client, String data_ver) throws Exception{
 		
 		PreparedStatement ps=null;
@@ -103,7 +114,7 @@ public class Cert_Biz {
 			
 			//1.计算箱数			
 			BigDecimal totalQty=doc.getTotal_qty();//总入库量
-			BigDecimal packQty=doc.getPack_qty();//装箱数量
+			BigDecimal packQty=doc.getPack_qty();//装箱数量  即每一箱装多少
 			
 			if(totalQty.compareTo(BigDecimal.ZERO)<=0){
 				return;
@@ -112,12 +123,12 @@ public class Cert_Biz {
 				return;
 			}
 			
-			BigDecimal bPackNum=totalQty.divide(packQty, 0,BigDecimal.ROUND_DOWN);
+			BigDecimal bPackNum=totalQty.divide(packQty, 0,BigDecimal.ROUND_DOWN); //计算出箱数 
 			int iPackNum=bPackNum.intValue();//箱数
 			
 			BigDecimal bLastQty=totalQty.subtract(packQty.multiply(bPackNum));//不足整箱的数量
 			if(bLastQty.compareTo(BigDecimal.ZERO)>0){
-				iPackNum++;
+				iPackNum++;   //不满一箱的，也增加一个箱 
 			}
 			
 			//获取最大的合格证号
@@ -133,7 +144,7 @@ public class Cert_Biz {
 			}
 			
 			String currentId=maxId;
-			
+			//给每一个箱子产生一个合格证
 			for(int i=1;i<=iPackNum;i++){
 				CERT_DOC_VIEW newDoc=new CERT_DOC_VIEW();
 				
@@ -148,14 +159,15 @@ public class Cert_Biz {
 				newDoc.setData_ver(data_ver);				
 				
 				if(i==iPackNum && bLastQty.compareTo(BigDecimal.ZERO)>0){
-					newDoc.setItm_qty(bLastQty);
+					//最后一箱
+					newDoc.setItm_qty(bLastQty); 
 				}else {
 					newDoc.setItm_qty(packQty);
 				}
 								
 				newDoc.setItm_id(doc.getItm_id());
 				newDoc.setItm_name(doc.getItm_name());
-				newDoc.setCert_status(0);
+				newDoc.setCert_status(0);  //'0：在制  1：已绑定  2：已入库',
 				newDoc.setCert_year(doc.getCert_year());
 				
 				addCert(newDoc,conn);
@@ -174,6 +186,15 @@ public class Cert_Biz {
 		}
 	}
 	
+	/**
+	 *  根据  物料ID （ITM_ID) 和  合格证ID（CERT_DOC_ID) 查询 记录。分页显示
+	 * @param doc
+	 * @param page_no
+	 * @param page_size
+	 * @param conn
+	 * @return
+	 * @throws SQLException
+	 */
 	public static EntityListDM<CERT_DOC_VIEW,CERT_DOC_VIEW> getCerts(CERT_DOC_VIEW doc, int page_no, int page_size, Connection conn) throws SQLException
 	{
 		if (page_no <= 0)page_no = 1;
@@ -247,6 +268,13 @@ public class Cert_Biz {
 		return result;
 	}
 	
+	/**
+	 * 获取列表总指定的合格证明细 列表
+	 * @param guids  指定的合格证ID
+	 * @param conn
+	 * @return
+	 * @throws Exception
+	 */
 	public static List<CERT_DOC_VIEW> getCertPrintList(List<String> guids,Connection conn) throws Exception
 	{
 		ArrayList<CERT_DOC_VIEW> returnList = new ArrayList<CERT_DOC_VIEW>();
@@ -267,11 +295,11 @@ public class Cert_Biz {
 			sbGuidString = sb.toString();
 			if(sbGuidString.length()>0)
 			{
-				sbGuidString = sbGuidString.substring(0, sbGuidString.length()-1);
+				sbGuidString = sbGuidString.substring(0, sbGuidString.length()-1); //去除最后一个逗号：，
 			}
 			else
 			{
-				return returnList;
+				return returnList; //
 			}
 
 			ps = conn.prepareStatement("SELECT CERT_DOC_GUID,CERT_DOC_ID,ITM_ID,ITM_NAME,ITM_QTY,CERT_STATUS,CERT_YEAR FROM CERT_DOC WHERE CERT_DOC_GUID IN("+sbGuidString+")");
@@ -306,6 +334,14 @@ public class Cert_Biz {
 		return returnList;
 	}
 	
+	
+	/**
+	 *  删除合格证  。 CERT_STATUS=2 已入库的记录不能删除 
+	 *  所谓合格证入库，是指在CTN_MAIN 表中插入一条记录，这条记录的CTN_MAIN_ID 就是CERT_DOC_ID 
+	 * @param guid CERT_DOC_GUID  要删除的记录GUID
+	 * @param conn
+	 * @throws Exception
+	 */
 	public static void delCertByGuid(String guid,Connection conn) throws Exception{
 		
 		PreparedStatement ps=null;
@@ -327,25 +363,31 @@ public class Cert_Biz {
 			rs.close();
 			ps.close();
 			
+			//以CertDOCID 为条码，在表中CTN_MAIN 中查找
 			CTN_MAIN_VIEW ctn=Common_Biz.getCtnByBaco(certId,conn);
 			if(ctn!=null){
-				if(ctn.getWh_id()!=null&&!ctn.getWh_id().isEmpty()&&!ctn.getWh_id().equals("0301")){					
+				//已经入到仓库中去，那么不可删除（非虚拟仓库）
+				if(ctn.getWh_id()!=null&&!ctn.getWh_id().isEmpty()&&!ctn.getWh_id().equals("0301")){
+					//0301 是虚拟仓库 
 				throw new Exception("已经入库,不可删除！");	
 				}
 			}
 			
+			//删除 CTN_MAIN 表中的记录 
 			String sqlDel="DELETE FROM CTN_MAIN WHERE CTN_BACO=?";
 			ps=conn.prepareStatement(sqlDel);
 			ps.setString(1, certId);
 			ps.execute();
 			ps.close();
 			
+			//删除合格证 
 			String sql="DELETE FROM CERT_DOC WHERE CERT_DOC_GUID=?";
 			ps=conn.prepareStatement(sql);
 			ps.setString(1, guid);
 			ps.execute();
 			ps.close();
 			
+			//删除合格证流程票关联信息 
 			String sqlRe="DELETE FROM CERT_SWS_RE WHERE CERT_DOC_GUID=?";
 			ps=conn.prepareStatement(sqlRe);
 			ps.setString(1, guid);
@@ -364,6 +406,13 @@ public class Cert_Biz {
 		}
 	}
 	
+	/**
+	 *  根据CERT_DOC_ID 来查找合格证 
+	 * @param id  CERT_DOC_ID
+	 * @param conn
+	 * @return
+	 * @throws Exception
+	 */
 	public static CERT_DOC_VIEW getCertById(String id,Connection conn) throws Exception{
 		PreparedStatement ps=null;
 		ResultSet rs=null;
@@ -402,6 +451,15 @@ public class Cert_Biz {
 		return view;
 	}
 	
+	/**
+	 * 合格证和流程票的绑定  ： 两点 ， 插入合格证流程票关联及入虚拟仓库功能 
+	 * @param doc
+	 * @param conn
+	 * @param operator
+	 * @param client
+	 * @param data_ver
+	 * @throws Exception
+	 */
 	public static void doCertSwsBind(CERT_SWS_DOC doc,Connection conn,String operator, String client, String data_ver) throws Exception{
 		PreparedStatement ps=null;
 		ResultSet rs=null;
@@ -498,6 +556,14 @@ public class Cert_Biz {
 		}
 	}
 	
+	/**
+	 * 获取流程票下的所有已完成量
+	 * @param swsId --子流程票ID
+	 * @param itmId --物料ID
+	 * @param conn
+	 * @return
+	 * @throws Exception
+	 */
 	public static SUB_WO_SUB_VIEW getSwsForCertBind(String swsId,String itmId,Connection conn) throws Exception{
 		SUB_WO_SUB_VIEW sub=new SUB_WO_SUB_VIEW();
 		
@@ -551,7 +617,13 @@ public class Cert_Biz {
 	}	
 	
 	
-	
+	/**
+	 * 更新合格证的状态 
+	 * @param id
+	 * @param certStatus  0  在制 ； 1  已绑定  2 已入库
+	 * @param conn
+	 * @throws Exception
+	 */
 	public static void  updCertStatusById(String id,int certStatus,Connection conn) throws Exception{
 		PreparedStatement ps=null;
 		

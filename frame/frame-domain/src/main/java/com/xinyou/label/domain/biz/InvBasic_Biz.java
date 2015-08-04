@@ -764,7 +764,7 @@ public class InvBasic_Biz {
 	}
 	
 	/** 
-	 *  TODO 
+	 *  添加一笔交易记录： 向表TRAN_MAIN ，TRAN_ITM ，TRAN_BACO ，TRAN_BASE_DOC， 插入记录 
 	 * @param doc
 	 * @param conn
 	 * @return
@@ -806,7 +806,8 @@ public class InvBasic_Biz {
 		pstmtInsertHead.execute();
 		pstmtInsertHead.close();
 		pstmtInsertHead = null;
-			
+		
+		//向TRAN_ITM 表中插入记录 
 		String bodyItmGuid = "";
 		for(int i=0;i<doc.getBody_itm().size();i++)
 		{
@@ -831,6 +832,7 @@ public class InvBasic_Biz {
 			pstmtInsertBodyItm.close();
 		}
 			
+		//向TRAN_BACO 中插入记录 
 		String bodyBacoGuid = "";
 		for(int i=0;i<doc.getBody_baco().size();i++)
 		{
@@ -856,6 +858,7 @@ public class InvBasic_Biz {
 			pstmtInsertBodyBaco.close();
 		}
 		
+		//向TRAN_BASE_DOC中插入一笔记录 
 		String docBaseGuid = "";
 		if(doc.getDoc_base()!=null){
 			for(int i=0;i<doc.getDoc_base().size();i++)

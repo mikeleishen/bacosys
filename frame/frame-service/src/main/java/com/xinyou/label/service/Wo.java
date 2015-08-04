@@ -384,6 +384,12 @@ public class Wo extends BaseService {
 		return response;
 	}
 	
+	
+	/**
+	 * 
+	 * @param basic_request : 其中的有效参数  token data_char ,data_int
+	 * @return
+	 */
 	@POST
 	@Consumes({MediaType.APPLICATION_JSON}) 
 	@Path(value = "/getSwsScrapDocBySwsRpGuid")
@@ -643,6 +649,7 @@ public class Wo extends BaseService {
 		}
 		return response;
 	}
+	
 	
 	@POST
 	@Consumes({MediaType.APPLICATION_JSON}) 
